@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { copyFile } from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -48,13 +48,13 @@ export async function POST(request: NextRequest) {
     const correctedFilePath = path.join(tempDir, `${correctedFileId}.pptx`);
     
     // 원본 파일 복사 (실제로는 수정된 내용으로 저장)
-    const fs = require('fs').promises;
-    await fs.copyFile(fileInfo.file_path, correctedFilePath);
+    await copyFile(fileInfo.file_path, correctedFilePath);
 
     // 수정된 파일 정보 저장
     fileStorage[correctedFileId] = {
       file_path: correctedFilePath,
       original_name: correctedFileName,
+      size: fileInfo.size || 0,
       is_corrected: true,
       parent_file_id: file_id,
       upload_time: new Date().toISOString()

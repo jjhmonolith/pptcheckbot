@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dropzone } from '@/components/ui/dropzone';
 import { Progress } from '@/components/ui/progress';
-import apiClient, { type CheckResponse, type ErrorItem } from '@/lib/api/client';
+import apiClient, { type CheckResponse } from '@/lib/api/client';
 
 // 업로드 단계 컴포넌트
 interface UploadStepProps {
@@ -279,7 +279,7 @@ export function ResultsStep({ results, fileId }: ResultsStepProps) {
 
       {/* 오류 목록 */}
       <div className="space-y-3">
-        {results.errors.map((error: any, index: number) => (
+        {results.errors.map((error, index: number) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 10 }}

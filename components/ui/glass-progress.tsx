@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface GlassProgressProps {
@@ -31,21 +30,19 @@ export function GlassProgress({
   return (
     <div className={cn('space-y-2', className)}>
       {(label || showPercentage) && (
-        <div className="flex items-center justify-between text-sm text-white/90">
+        <div className="flex items-center justify-between text-sm text-gray-700">
           {label && <span>{label}</span>}
           {showPercentage && <span>{Math.round(percentage)}%</span>}
         </div>
       )}
       
       <div className={cn(
-        'glass-subtle rounded-full overflow-hidden',
+        'bg-gray-200 rounded-full overflow-hidden',
         sizes[size]
       )}>
-        <motion.div
-          className="h-full bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: `${percentage}%` }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+        <div
+          className="h-full bg-blue-600 rounded-full transition-all duration-500 ease-out"
+          style={{ width: `${percentage}%` }}
         />
       </div>
     </div>

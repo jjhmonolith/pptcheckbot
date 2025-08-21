@@ -4,10 +4,10 @@ import { readFile } from 'fs/promises';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { fileId: string } }
+  { params }: { params: Promise<{ fileId: string }> }
 ) {
   try {
-    const fileId = params.fileId;
+    const { fileId } = await params;
     
     if (!fileId) {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function GET(
     const fileBuffer = await readFile(filePath);
 
     // 파일 다운로드 응답
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(new Uint8Array(fileBuffer), {
       headers: {
         'Content-Type': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'Content-Disposition': `attachment; filename="${encodeURIComponent(fileName)}"`,

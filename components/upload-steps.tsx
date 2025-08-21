@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, FileText, CheckCircle, XCircle, Download, Sparkles } from 'lucide-react';
+import { FileText, CheckCircle, XCircle, Download, Sparkles } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
 import { GlassButton } from '@/components/ui/glass-button';
 import { GlassDropzone } from '@/components/ui/glass-dropzone';
 import { GlassProgress } from '@/components/ui/glass-progress';
-import apiClient, { type CheckResponse, type ErrorItem } from '@/lib/api/client';
+import apiClient, { type CheckResponse } from '@/lib/api/client';
 
 // 업로드 단계 컴포넌트
 interface UploadStepProps {
@@ -284,7 +284,7 @@ export function ResultsStep({ results, fileId }: ResultsStepProps) {
 
       {/* 오류 목록 */}
       <div className="space-y-4">
-        {results.errors.map((error: any, index: number) => (
+        {results.errors.map((error, index: number) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 10 }}

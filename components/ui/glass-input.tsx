@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
@@ -12,33 +11,19 @@ interface GlassInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const GlassInput = React.forwardRef<HTMLInputElement, GlassInputProps>(
-  ({ className, label, error, icon, variant = 'default', ...props }, ref) => {
-    const variants = {
-      default: 'glass',
-      strong: 'glass-strong',
-    };
+  ({ className, label, error, icon, ...props }, ref) => {
 
     return (
-      <motion.div 
-        className="space-y-2"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
+      <div className="space-y-2">
         {label && (
-          <motion.label 
-            className="text-sm font-medium text-slate-700"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
+          <label className="text-sm font-medium text-gray-700">
             {label}
-          </motion.label>
+          </label>
         )}
         
         <div className="relative">
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
               {icon}
             </div>
           )}
@@ -46,13 +31,13 @@ const GlassInput = React.forwardRef<HTMLInputElement, GlassInputProps>(
           <input
             ref={ref}
             className={cn(
-              'w-full rounded-xl px-4 py-3 text-slate-700 placeholder-slate-400',
-              'border border-slate-300/40 bg-white/80 backdrop-blur-sm',
-              'transition-all duration-200',
-              'focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400/60',
-              'hover:bg-white/90 hover:border-slate-300/60',
+              'w-full rounded-lg px-4 py-2.5 text-gray-900 placeholder-gray-400',
+              'border border-gray-300 bg-white',
+              'transition-colors duration-200',
+              'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+              'hover:border-gray-400',
               icon && 'pl-10',
-              error && 'border-red-400/50 focus:ring-red-400/50',
+              error && 'border-red-500 focus:ring-red-500',
               className
             )}
             {...props}
@@ -60,16 +45,11 @@ const GlassInput = React.forwardRef<HTMLInputElement, GlassInputProps>(
         </div>
         
         {error && (
-          <motion.p 
-            className="text-sm text-red-400"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-          >
+          <p className="text-sm text-red-600">
             {error}
-          </motion.p>
+          </p>
         )}
-      </motion.div>
+      </div>
     );
   }
 );

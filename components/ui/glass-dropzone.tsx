@@ -1,10 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
-import { Upload, FileText, AlertCircle } from 'lucide-react';
+import { Upload, FileText, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { GlassCard } from './glass-card';
+import { Card } from './card';
 
 interface GlassDropzoneProps {
   onDrop: (files: File[]) => void;
@@ -38,97 +37,68 @@ export function GlassDropzone({
     multiple: false,
   });
 
-  const variants = {
-    idle: {
-      scale: 1,
-      borderColor: 'rgba(255, 255, 255, 0.2)',
-      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    },
-    active: {
-      scale: 1.02,
-      borderColor: 'rgba(99, 102, 241, 0.5)',
-      backgroundColor: 'rgba(99, 102, 241, 0.1)',
-    },
-    reject: {
-      scale: 0.98,
-      borderColor: 'rgba(239, 68, 68, 0.5)',
-      backgroundColor: 'rgba(239, 68, 68, 0.1)',
-    },
-  };
-
-  const currentVariant = isDragReject ? 'reject' : isDragActive ? 'active' : 'idle';
-
   return (
-    <motion.div
+    <div
       {...getRootProps()}
-      className={cn('cursor-pointer', className)}
-      variants={variants}
-      animate={currentVariant}
-      transition={{ duration: 0.2 }}
+      className={cn('cursor-pointer transition-transform duration-200 hover:scale-[1.01]', className)}
     >
       <input {...getInputProps()} />
       
-      <GlassCard className="p-12 text-center border-2 border-dashed" variant="subtle">
-        <motion.div
-          className="space-y-4"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
+      <Card className={cn(
+        'p-12 border-2 border-dashed transition-all duration-200',
+        isDragActive && !isDragReject && 'border-blue-400 bg-blue-50',
+        isDragReject && 'border-red-400 bg-red-50',
+        !isDragActive && 'hover:border-gray-300 hover:bg-gray-50'
+      )}>
+        <div className="text-center space-y-4">
           {isLoading ? (
             <>
-              <motion.div
-                className="mx-auto w-16 h-16 border-4 border-white/20 border-t-indigo-400 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              />
-              <p className="text-white/80">파일을 처리하는 중...</p>
+              <div className="mx-auto w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin" />
+              <p className="text-gray-600">파일을 처리하는 중...</p>
             </>
           ) : (
             <>
-              <motion.div
-                className="mx-auto w-16 h-16 flex items-center justify-center"
-                animate={{ 
-                  y: isDragActive ? -5 : 0,
-                  scale: isDragActive ? 1.1 : 1 
-                }}
-                transition={{ duration: 0.2 }}
+              <div
+                className={cn(
+                  "mx-auto w-12 h-12 flex items-center justify-center transition-transform duration-200",
+                  isDragActive && "transform -translate-y-0.5 scale-110"
+                )}
               >
                 {isDragReject ? (
-                  <AlertCircle className="w-12 h-12 text-red-400" />
+                  <AlertTriangle className="w-8 h-8 text-red-500" />
                 ) : acceptedFiles.length > 0 ? (
-                  <FileText className="w-12 h-12 text-green-400" />
+                  <FileText className="w-8 h-8 text-green-600" />
                 ) : (
-                  <Upload className="w-12 h-12 text-indigo-400" />
+                  <Upload className="w-8 h-8 text-gray-400" />
                 )}
-              </motion.div>
+              </div>
 
               <div className="space-y-2">
                 {isDragActive ? (
-                  <p className="text-lg font-medium text-white">
+                  <p className="text-lg font-medium text-gray-900">
                     {isDragReject ? '지원하지 않는 파일입니다' : '파일을 놓으세요'}
                   </p>
                 ) : acceptedFiles.length > 0 ? (
                   <div>
-                    <p className="text-lg font-medium text-green-400">
+                    <p className="text-lg font-medium text-green-600">
                       파일 선택됨
                     </p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-gray-500">
                       {acceptedFiles[0].name}
                     </p>
                   </div>
                 ) : (
                   <div>
-                    <p className="text-lg font-medium text-white">
+                    <p className="text-lg font-medium text-gray-900">
                       PowerPoint 파일을 업로드하세요
                     </p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-gray-500">
                       파일을 끌어다 놓거나 클릭하여 선택
                     </p>
                   </div>
                 )}
 
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-gray-400">
                   .pptx 파일만 지원 (최대 5MB)
                 </p>
               </div>
@@ -136,16 +106,12 @@ export function GlassDropzone({
           )}
 
           {error && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="p-3 rounded-lg bg-red-500/10 border border-red-400/30"
-            >
-              <p className="text-sm text-red-400">{error}</p>
-            </motion.div>
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
           )}
-        </motion.div>
-      </GlassCard>
-    </motion.div>
+        </div>
+      </Card>
+    </div>
   );
 }

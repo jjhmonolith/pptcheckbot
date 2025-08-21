@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
@@ -10,49 +9,29 @@ interface GlassCardProps {
   variant?: 'default' | 'strong' | 'subtle';
   hover?: boolean;
   onClick?: () => void;
-  animate?: boolean;
 }
 
 const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
-  ({ children, className, variant = 'default', hover = false, onClick, animate = true }, ref) => {
+  ({ children, className, variant = 'default', hover = false, onClick }, ref) => {
     const variants = {
-      default: 'glass',
-      strong: 'glass-strong',
-      subtle: 'glass-subtle',
+      default: 'bg-white border border-gray-200 shadow-sm',
+      strong: 'bg-white border border-gray-300 shadow-md',
+      subtle: 'bg-gray-50 border border-gray-100 shadow-sm',
     };
 
-    const Component = animate ? motion.div : 'div';
-
-    const motionProps = animate
-      ? {
-          initial: { opacity: 0, scale: 0.95 },
-          animate: { opacity: 1, scale: 1 },
-          transition: { duration: 0.3, ease: 'easeOut' },
-          whileHover: hover
-            ? {
-                scale: 1.02,
-                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
-                transition: { duration: 0.2 },
-              }
-            : undefined,
-          whileTap: onClick ? { scale: 0.98 } : undefined,
-        }
-      : {};
-
     return (
-      <Component
+      <div
         ref={ref}
         className={cn(
-          'rounded-2xl transition-all duration-300 ease-out',
+          'rounded-lg transition-all duration-200',
           variants[variant],
-          hover && 'cursor-pointer hover:shadow-2xl',
+          hover && 'cursor-pointer hover:shadow-lg hover:scale-[1.01]',
           className
         )}
         onClick={onClick}
-        {...motionProps}
       >
         {children}
-      </Component>
+      </div>
     );
   }
 );

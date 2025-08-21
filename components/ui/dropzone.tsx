@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import { Upload, FileText, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -39,11 +38,9 @@ export function Dropzone({
   });
 
   return (
-    <motion.div
+    <div
       {...getRootProps()}
-      className={cn('cursor-pointer', className)}
-      whileHover={{ scale: isDragActive ? 1 : 1.01 }}
-      transition={{ duration: 0.2 }}
+      className={cn('cursor-pointer transition-transform duration-200 hover:scale-[1.01]', className)}
     >
       <input {...getInputProps()} />
       
@@ -56,22 +53,16 @@ export function Dropzone({
         <div className="text-center space-y-4">
           {isLoading ? (
             <>
-              <motion.div
-                className="mx-auto w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              />
+              <div className="mx-auto w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin" />
               <p className="text-gray-600">파일을 처리하는 중...</p>
             </>
           ) : (
             <>
-              <motion.div
-                className="mx-auto w-12 h-12 flex items-center justify-center"
-                animate={{ 
-                  y: isDragActive ? -2 : 0,
-                  scale: isDragActive ? 1.1 : 1 
-                }}
-                transition={{ duration: 0.2 }}
+              <div
+                className={cn(
+                  "mx-auto w-12 h-12 flex items-center justify-center transition-transform duration-200",
+                  isDragActive && "transform -translate-y-0.5 scale-110"
+                )}
               >
                 {isDragReject ? (
                   <AlertTriangle className="w-8 h-8 text-red-500" />
@@ -80,7 +71,7 @@ export function Dropzone({
                 ) : (
                   <Upload className="w-8 h-8 text-gray-400" />
                 )}
-              </motion.div>
+              </div>
 
               <div className="space-y-2">
                 {isDragActive ? (
@@ -115,16 +106,12 @@ export function Dropzone({
           )}
 
           {error && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="p-3 rounded-lg bg-red-50 border border-red-200"
-            >
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200">
               <p className="text-sm text-red-600">{error}</p>
-            </motion.div>
+            </div>
           )}
         </div>
       </Card>
-    </motion.div>
+    </div>
   );
 }

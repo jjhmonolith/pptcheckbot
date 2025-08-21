@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { UploadStep, ProcessingStep, ResultsStep } from '@/components/steps';
-import apiClient, { type CheckResponse, type ErrorItem } from '@/lib/api/client';
+import apiClient, { type CheckResponse } from '@/lib/api/client';
 
 export default function Home() {
   const [password, setPassword] = useState('');
@@ -122,7 +122,6 @@ function MainApp() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileId, setFileId] = useState<string>('');
   const [checkResults, setCheckResults] = useState<CheckResponse | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
   const handleFileUpload = async (files: File[]) => {
@@ -142,7 +141,6 @@ function MainApp() {
   const handleStartCheck = async () => {
     if (!fileId) return;
     
-    setIsProcessing(true);
     setCurrentStep('processing');
     
     try {
@@ -153,8 +151,6 @@ function MainApp() {
       setUploadError(error instanceof Error ? error.message : '맞춤법 검사에 실패했습니다');
       setCurrentStep('upload');
     }
-    
-    setIsProcessing(false);
   };
 
   const handleReset = () => {
