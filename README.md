@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PPT 맞춤법 검사기
 
-## Getting Started
+PowerPoint 교재를 자동으로 교정하는 AI 기반 웹 애플리케이션
 
-First, run the development server:
+## 🚀 기능
+
+- 🔐 패스워드 기반 보안 인증
+- 📄 PowerPoint(.pptx) 파일 업로드
+- 🤖 AI 기반 맞춤법 검사 
+- ✏️ 오류 선택적 수정
+- 📥 수정된 파일 자동 다운로드
+
+## 💻 기술 스택
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **UI**: Tailwind CSS, Framer Motion, Lucide React
+- **API**: Next.js API Routes
+- **AI**: OpenAI ChatGPT API
+- **배포**: Vercel
+
+## 🔧 설치 및 실행
+
+### 1. 클론 및 의존성 설치
+
+```bash
+git clone https://github.com/jjhmonolith/pptcheckbot.git
+cd pptcheckbot
+npm install
+```
+
+### 2. 환경변수 설정
+
+`.env.local` 파일 생성:
+
+```bash
+# 앱 접속 패스워드
+APP_PASSWORD=ppt2025
+
+# OpenAI API 키
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### 3. 로컬 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 에서 접속
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌐 Vercel 배포
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jjhmonolith/pptcheckbot)
 
-## Learn More
+### 배포 시 환경변수 설정
 
-To learn more about Next.js, take a look at the following resources:
+Vercel 대시보드에서 다음 환경변수를 설정하세요:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `APP_PASSWORD`: 앱 접속용 패스워드
+- `OPENAI_API_KEY`: OpenAI API 키
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📖 사용법
 
-## Deploy on Vercel
+1. 설정된 패스워드로 로그인
+2. `.pptx` 파일 업로드 (최대 5MB)
+3. 맞춤법 검사 시작
+4. 발견된 오류 확인 및 선택
+5. 수정된 파일 다운로드
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ 개발
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# 개발 서버 실행
+npm run dev
+
+# 빌드
+npm run build
+
+# 프로덕션 실행
+npm start
+
+# 린트
+npm run lint
+```
+
+## 📝 라이선스
+
+MIT License
+
+---
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
