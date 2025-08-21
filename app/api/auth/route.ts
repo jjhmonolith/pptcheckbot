@@ -7,10 +7,18 @@ export async function POST(request: NextRequest) {
     // 간단한 암호 검증 (실제로는 더 안전한 방법 사용)
     const correctPassword = process.env.APP_PASSWORD || 'ppt2025';
     
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+    
     if (password === correctPassword) {
       return NextResponse.json({ 
         success: true, 
         message: '인증 성공' 
+      }, {
+        headers: corsHeaders
       });
     } else {
       return NextResponse.json(
@@ -18,7 +26,10 @@ export async function POST(request: NextRequest) {
           success: false, 
           detail: '올바르지 않은 암호입니다' 
         },
-        { status: 401 }
+        { 
+          status: 401,
+          headers: corsHeaders
+        }
       );
     }
   } catch {
@@ -27,7 +38,25 @@ export async function POST(request: NextRequest) {
         success: false, 
         detail: '서버 오류가 발생했습니다' 
       },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        }
+      }
     );
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
 }
