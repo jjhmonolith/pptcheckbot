@@ -1,0 +1,27 @@
+{
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "OPENAI_API_KEY": "@openai_api_key",
+    "APP_PASSWORD": "@app_password"
+  },
+  "functions": {
+    "api/main.py": {
+      "maxDuration": 300
+    }
+  }
+}
